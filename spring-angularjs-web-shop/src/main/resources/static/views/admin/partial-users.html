@@ -1,0 +1,20 @@
+<h1>Users</h1>
+
+<button class="btn btn-primary" ng-disabled="uc.ifPrevPageAvailable()" ng-click="uc.changePage(-1)">prev</button>
+<button class="btn btn-primary" ng-disabled="uc.ifNextPageAvailable()" ng-click="uc.changePage(1)">next</button>
+
+<table class="table">
+	<tr>
+		<th>Firstname</th>
+		<th>Lastname</th>
+		<th>Email</th>
+		<th>Enabled</th>
+	</tr>
+	<tr ng-repeat="user in users">
+		<td>{{user.firstname}}</td>
+		<td>{{user.lastname}}</td>
+		<td>{{user.email}}</td>
+		<td>{{user.enabled}}</td>
+		<td><button ng-click="uc.toggleEnabled(user)">Toggle Enabled</button>
+	</tr>
+</table>

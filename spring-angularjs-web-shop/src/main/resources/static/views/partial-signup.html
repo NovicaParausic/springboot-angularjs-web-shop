@@ -1,0 +1,28 @@
+<form role="form" class="col-sm-6 col-lg-4">
+	<h2 class="form-auth-heading">Signup</h2>
+	
+	<div class="alert alert-danger" ng-if="sc.signupError" role="alert">{{sc.signupErrorMessage}}</div>
+	<div class="alert alert-success" ng-if="sc.signupSuccess" role="alert">Account created! <a ui-sref="login">Login</a> now!</div>
+	
+	<label for="inputUsername" class="sr-only">Username</label>
+	<input type="text" id="inputUsername" ng-model="sc.username" class="form-control" placeholder="Username" pattern=".{4,30}" required title="4 characters minimum" autofocus>
+	</br>
+	
+	<label for="inputPassword" class="sr-only">Password</label>
+	<input type="password" id="inputPassword" ng-model="sc.password" class="form-control" placeholder="Password" pattern=".{4,30}" title="4 characters minimum" required>
+	</br>
+	
+	<label for="inputFirstname" class="sr-only">Firstname</label>
+	<input type="text" id="inputFrstname" ng-model="sc.firstname" class="form-control" placeholder="Firstname" pattern=".{4,30}" title="4 characters minimum" required>
+	</br>
+	
+	<label for="inputLastname" class="sr-only">Lastname</label>
+	<input type="text" id="inputLastname" ng-model="sc.lastname" class="form-control" placeholder="Lastname" pattern=".{4,30}" title="4 characters minimum" required>
+	</br>
+	
+	<label for="inputEmail" class="sr-only">Email</label>
+	<input type="email" id="inputEmail" ng-model="sc.email" class="form-control" placeholder="Email" pattern=".{7,30}" title="7 characters minimum" required>
+	</br>
+	
+	<button class="btn btn-lg btn-primary" type="submit" ng-click="sc.signup()">Signup</button>
+</form>

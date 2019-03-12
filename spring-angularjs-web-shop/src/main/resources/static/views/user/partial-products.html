@@ -1,0 +1,18 @@
+<h1>Products</h1>
+
+<table class="table">
+	<tr>
+		<th>Name</th>
+		<th>Price</th>
+		<th>Quantity</th>
+		<th>Value</th>
+	</tr>
+	<tr ng-repeat="product in products">
+		<td>{{product.name}}</td>
+		<td>{{product.price}}</td>
+		<td><input type="number" min="1" ng-model="quantity"></td>
+		<td><p ng-if="quantity">{{product.price * quantity}}</p></td>
+		<td><button ng-click="prc.saveProductToCart(product, quantity)">Add to Cart</button></td>
+	</tr>
+	
+</table>

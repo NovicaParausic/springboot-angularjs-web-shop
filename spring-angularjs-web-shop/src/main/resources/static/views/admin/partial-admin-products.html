@@ -1,0 +1,19 @@
+<h1>Admin Products</h1>
+
+
+<table class="table">
+	<tr>
+		<th>Name</th>
+		<th>Price</th>
+		<th>Buying Price</th>
+		<th>Enabled</th>
+	</tr>
+	<tr ng-repeat="product in products">
+		<td>{{product.name}}</td>
+		<td>{{product.price}}</td>
+		<td>{{product.buyingPrice}}</td>
+		<td>{{product.enabled}}</td>
+		<td><button ng-click="apc.change(product)">Change</button></td>
+		<td><button ng-click="apc.toggleEnabled(product)">Toggle Enabled</button></td>
+	</tr>
+</table>

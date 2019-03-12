@@ -1,0 +1,34 @@
+<h1>ADMIN PRODUCT</h1>
+<div class="row">
+	<form role="form" ng-submit="arc.saveProduct(product)" class="col-sm-6 col-lg-4">
+		<div>
+			<label>Name:</label>
+			<input type="text" class="form-control" ng-model="product.name">
+		</div>
+		<div>
+			<label>Price:</label>
+			<input type="number" class="form-control" ng-model="product.price">
+		</div>
+		<div>
+			<label>Buying Price:</label>
+			<input type="number" class="form-control" ng-model="product.buyingPrice">
+		</div>
+		<div>
+			<label>Information:</label>
+			<textarea type="text" rows="4" cols="50" class="form-control" ng-model="product.information"></textarea>
+		</div>
+		<div>
+			<label>Enabled:{{product.enabled}}</label>
+			<select ng-model="product.enabled"
+				ng-options="o.v as o.n for o in [{n: 'False', v:false}, {n:'True', v:true}]">				
+			</select>			
+			<!-- <input type="text" class="form-control" ng-model="product.enabled"> -->
+		</div>
+		<div>
+			<button type="submit" class="btn btn-primary">Save</button>
+		</div>
+		<div>
+			token: {{token}}
+		</div>
+	</form>
+</div>

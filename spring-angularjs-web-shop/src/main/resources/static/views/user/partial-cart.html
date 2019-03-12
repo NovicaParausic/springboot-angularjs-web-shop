@@ -1,0 +1,27 @@
+<h1>USER PROFILE</h1>
+
+<div class="alert alert-danger" ng-if="pc.buyError" role="alert">Something went wrong!</div>
+<div class="alert alert-success" ng-if="pc.buySuccess" role="alert">Order created!<a ui-sref="index">Go to home page</a></div>
+
+<table class="table">
+	<tr>
+		<th>Name</th>
+		<th>Price</th>
+		<th>Quantity</th>
+		<th>Value</th>
+	</tr>
+	<tr ng-repeat="item in items">
+		<td>{{item.name}}</td>
+		<td>{{item.price}}</td>
+		<td>{{item.quantity}}</td>
+		<td>{{item.revenue}}</td>
+		<td><button ng-click="pc.deleteItem(item.code)">Delete from Cart</button></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td></td>
+		<td>Total Value</td>
+		<td>{{value}}</td>
+		<td><button ng-click="pc.buyItems()">Buy Products</button></td>
+	</tr>
+</table>
