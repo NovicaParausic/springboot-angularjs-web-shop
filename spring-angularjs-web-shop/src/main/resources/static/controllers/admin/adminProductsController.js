@@ -7,10 +7,11 @@
 			'$http',
 			'$scope',
 			'$state',
+			'$log',
 			adminProductsController
 		]);
 	
-	function adminProductsController($http, $scope, $state){
+	function adminProductsController($http, $scope, $state, $log){
 		var vm = this;
 		
 		vm.change = change;
@@ -25,38 +26,34 @@
 			})
 			.then(function(response){
 				if(response && response.data){
-					console.log(response.status);
+					$log.info(response.status);
 					$scope.products = response.data;
-					console.log($scope.products);
 				}
 			})
 			.catch(function (response) {
-				console.log(response.status)
+				$log.info(response.status);
 			});
 		
 		}
 		
 		function toggleEnabled(product){
 			var enabled = !product.enabled;
-			console.log(enabled);
 			$http({
 				method: 'POST',
 				url: '/bla/products/' + product.id + '/enabled/' + enabled 
 			})
 			.then(function (response) {
-				console.log(response.status);
-				console.log(response.data);
+				$log.info(response.status);
 				getProducts();
 			})
 			.catch(function (response) {
-				console.log(response.status);
+				$log.info(response.status);
 			});
 		}
 		
 		getProducts();
 		
 		function change(product) {
-			//console.log(product);
 			$state.go('admin-product', {obj: product});
 		}		
 	}

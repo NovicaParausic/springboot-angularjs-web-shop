@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bla.common.TimeProvider;
 import com.bla.entity.Order;
 import com.bla.entity.OrderItem;
 import com.bla.model.CartItem;
@@ -67,6 +68,8 @@ public class OrderServiceImpl implements OrderService{
 			orderItemRepository.save(orderItem);
 		}
 		
+		order.setUserId(userId);
+		order.setDate(TimeProvider.now());
 		order.setValue(totalValue); 
 		order.setPrice(totalPrice);
 		order.setMargin(totalMargin);

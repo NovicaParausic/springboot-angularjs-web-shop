@@ -1,4 +1,4 @@
-(function(){
+(function() {
 	'use strict';
 	
 	angular
@@ -10,7 +10,7 @@
 		     signupController
         ]);
 	
-	function signupController($scope, $state, authService){
+	function signupController($scope, $state, authService) {
 		var vm = this;
 		
 		vm.signupSuccess = false;
@@ -19,20 +19,20 @@
 		
 		vm.signup = signup;
 		
-		function signup(){
+		function signup() {
 			vm.signupSuccess = false;
 			vm.signupError = false;
 			vm.signupErrorMessage = null;
 			
-			if(!vm.username || !vm.password){
+			if(!vm.username || !vm.password) {
 				vm.signupError = true;
 				vm.signupErrorMessage = 'Username and password required';
 				return
 			}
 			
-			if(!vm.firstname || !vm.lastname){
+			if(!vm.firstname || !vm.lastname) {
 				vm.signupError = true;
-				vm.signupErrorMessage = 'Username and password required';
+				vm.signupErrorMessage = 'Firstname and lastname required';
 				return
 			}
 			
@@ -41,21 +41,19 @@
 				.catch(handleFailedSignup);
 		}
 		
-		function handleSuccessfulSignup(response){
-           // $state.go('index');
+		function handleSuccessfulSignup(response) {
 			vm.signupSuccess = true;
 		}
 		
-		function handleFailedSignup(response){
+		function handleFailedSignup(response) {
 			vm.signupSuccess = false;
 			vm.signupError = true;
 			console.log(response);
-			if(response.status == 422){
+			if(response.status == 422) {
 				vm.signupErrorMessage = "Username already exists";
 			} else {
 				vm.signupErrorMessage = "Something went wrong"
 			}	
-			
 		}
 	}
 })();

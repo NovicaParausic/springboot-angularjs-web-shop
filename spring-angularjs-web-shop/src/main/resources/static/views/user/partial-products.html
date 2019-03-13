@@ -1,5 +1,8 @@
 <h1>Products</h1>
 
+<button class="btn btn-primary" ng-disabled="prc.ifPrevPageAvailable()" ng-click="prc.changePage(-1)">prev</button>
+<button class="btn btn-primary" ng-disabled="prc.ifNextPageAvailable()" ng-click="prc.changePage(1)">next</button>
+
 <table class="table">
 	<tr>
 		<th>Name</th>

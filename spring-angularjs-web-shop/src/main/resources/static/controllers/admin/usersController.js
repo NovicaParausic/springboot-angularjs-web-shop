@@ -1,4 +1,4 @@
-(function(){
+(function() {
 	'use strict';
 	
 	angular
@@ -6,18 +6,18 @@
 		.controller('UsersController', [
 			'$scope',
 		    '$http',
+		    '$log',
 		    usersController
         ]);
 	
-	function usersController($scope, $http){
+	function usersController($scope, $http, $log) {
 		var vm = this;
 		
 		vm.changePage = changePage;
 		vm.getUsers = getUsers;
-		vm.toggleEnabled = toggleEnabled;
 		vm.ifNextPageAvailable = ifNextPageAvailable;
 		vm.ifPrevPageAvailable = ifPrevPageAvailable;
-		
+		vm.toggleEnabled = toggleEnabled;
 		
 		$scope.users = '';
 		vm.pages = '';
@@ -31,17 +31,16 @@
 			.then(function (response) {
 				$scope.users = response.data.content;
 	        	vm.pages = response.data.totalPages;
-
-				console.log(response);
+	        	$log.info(response.status);
 			})
 			.catch(function(response) {
-				console.log(response.status)
+				$log.info(response.status)
 			});
 		}
 
 		getUsers();
 		
-		function toggleEnabled(user){
+		function toggleEnabled(user) {
 			var enabled = !user.enabled;
 			
 			$http({
@@ -51,27 +50,26 @@
 			.then(function (response) {
 				getUsers();
 			})
-			.catch(function(response){
-				//console.log(response.status);
+			.catch(function(response) {
+				$log.info(response.status);
 			});
 		}
 		
-		function changePage(i){
-    		console.log('Change page' + vm.page);
+		function changePage(i) {
     		vm.page += i;
     		getUsers();
     	}
         
-        function ifPrevPageAvailable(){
-        	if(vm.page > 0){
+        function ifPrevPageAvailable() {
+        	if(vm.page > 0) {
         		return false
         	} else {
         		return true;
         	}
         }
         
-        function ifNextPageAvailable(){
-        	if(vm.page < (vm.pages - 1)){
+        function ifNextPageAvailable() {
+        	if(vm.page < (vm.pages - 1)) {
         		return false
         	} else {
         		return true;

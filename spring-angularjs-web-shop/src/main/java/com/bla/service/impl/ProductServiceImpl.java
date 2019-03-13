@@ -4,6 +4,7 @@ package com.bla.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> findByEnabled(int page) {
+	public Page<Product> findByEnabled(int page) {
 		return productRepository.findByEnabled(PageRequest.of(page, 5));
 	}
 }

@@ -1,4 +1,4 @@
-(function(){
+(function() {
 	
 	'use strict';
 	
@@ -8,11 +8,12 @@
 		    '$http',
 		    '$cookies',
 		    '$state',
-		    '$window',		    
+		    '$window',	
+		    '$log',
 		    authService
          ]);
 	
-	function authService($http, $cookies, $state, $window){
+	function authService($http, $cookies, $state, $window, $log) {
 		
 		var authService = {
 				login: login,
@@ -27,7 +28,7 @@
 		
 		return authService;
 		
-		function login(user, pass){
+		function login(user, pass) {
 			var reqObj = {
 					method: 'POST',
 					url: '/auth',
@@ -37,12 +38,12 @@
 					}
 			};
 			
-			return $http(reqObj).then(function(response){
-				if(response && response.data){
+			return $http(reqObj).then(function(response) {
+				if(response && response.data) {
 					response = response.data;
 					
 					var expires = new Date(), 
-						user ={};
+									  user ={};
 					
 					user.token = 'Bearer ' + response.token;
 					
@@ -62,33 +63,32 @@
 			});
 		}
 		
-		function logout(){
+		function logout() {
 			$http({
 				method: 'POST',
 				url: '/logout'
 			})
 			.then(function(response) {
-				console.log(response);
 				$cookies.remove('user');
 				$state.go('index');
 			})
 			.catch(function(response) {
-				console.log(response);
+				$log.info(response.status);
 			});
 			
 		}
 		
-		function decodeJwt(token){
+		function decodeJwt(token) {
 			var base64Url = token.split('.')[1];
 			var base64 = base64Url.replace('-', '+').replace('_', '/');			
 			var decodedbase64 = window.atob(base64);
 			return JSON.parse(decodedbase64);
 		}
 				
-		function roleToNumber(role){
+		function roleToNumber(role) {
 			var number;
 			
-			switch(role){
+			switch(role) {
  				case 'ROLE_USER':
  					number = 2;
  				break;
@@ -102,49 +102,49 @@
 		}
 		
 		
-		function isAuthenticated(){
+		function isAuthenticated() {
 			var user = $cookies.get('user');
 			return user && user !== 'undefined';
 		}
 		
-		function isAdmin(){
+		function isAdmin() { 
 			var user = $cookies.get('user');
-			if(user){
+			if(user) {
 				user = JSON.parse(user);
-				if(user.role == 4){
+				if(user.role == 4) {
 					return true;
 				} 
 			}
 			return false;
 		}
 		
-		function isUser(){
+		function isUser() {
 			var user = $cookies.get('user');
-			if(user){
+			if(user) {
 				user = JSON.parse(user);
-				if(user.role == 2){
+				if(user.role == 2) {
 					return true;
 				} 
 			}
 			return false;
 		}
 		
-		function getUserData(){
-			if(isAuthenticated()){
+		function getUserData() {
+			if(isAuthenticated()) {
 				return JSON.parse($cookies.get('user'));
 			}
 			return false;
 		}
 		
-		function getJwtToken(){
+		function getJwtToken() {
 			var user = getUserData();
-			if(user && user.token){
+			if(user && user.token) {
 				return user.token;
 			}
 			return false;
 		}
 		
-		function createAuthorizationToken(){
+		function createAuthorizationToken() {
 			var token = getJwtToken();
 		      if (token) {
 		          return {
@@ -158,7 +158,7 @@
 		      }			
 		}
 		
-		function signup(username, password, firstname, lastname, email){
+		function signup(username, password, firstname, lastname, email) {
 			var reqObj = {
 				method: 'POST',
 				url: '/registration',
@@ -170,13 +170,7 @@
 					email: email
 				}
 			};
-			console.log({
-					username: username,
-					password: password,
-					firstname: firstname,
-					lastname: lastname,
-					email: email
-				})
+			
 			return $http(reqObj);
 		}
 	}

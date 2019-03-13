@@ -1,4 +1,4 @@
-(function(){
+(function() {
 	'use strict';
 	
 	angular
@@ -6,36 +6,43 @@
 		.controller('ProductsController', [
 		    '$scope',
 			'$http',
+			'$log',
 			'authService',
 		    productsController
         ]);
 	
-	function productsController($scope, $http, authService) {
+	function productsController($scope, $http, $log, authService) {
 		var vm = this;
 		
-		console.log('PRODUCTS CONTROLLER');
-		
 		$scope.products = '';
+		vm.page = 0;
+		vm.pages = 0;
 		
+		vm.changePage = changePage;
 		vm.getProducts = getProducts;
 		vm.isAdmin = isAdmin;
+		vm.ifNextPageAvailable = ifNextPageAvailable;
+		vm.ifPrevPageAvailable = ifPrevPageAvailable;
 		vm.saveProductToCart = saveProductToCart;
 		
 		function getProducts(){
 			$http({
 				method: 'GET', 
-				url: '/bla/products'
+				url: '/bla/products?page=' + vm.page
 			})			
 			.then(function (response) {
 				if(response && response.data) {
-					$scope.products = response.data;
+					vm.pages = response.data.totalPages;
+					$scope.products = response.data.content;
 				}
 			})
 			.catch(function(response) {
-				//console.log(response.status);
+				$log.info(response.status);
 			});
 		
 		}
+		
+		getProducts();
 		
 		function isAdmin() {
 			return authService.isAdmin();
@@ -63,13 +70,32 @@
 				data: item
 			})
 			.then(function (response) {
-				//console.log(response.status);
+				$log.info(response.status);
 			})
 			.catch(function (response) {
-				//console.log(response.status);
+				$log.info(response.status);
 			});
 		} 
 		
-		getProducts();
+		function changePage(i){
+			vm.page += i;
+			getProducts();
+		}
+		
+		function ifPrevPageAvailable() {
+	        if(vm.page > 0) {
+	        	return false
+	        } else {
+	        	return true;
+	        }
+		}
+	        
+	    function ifNextPageAvailable() {
+	        if(vm.page < (vm.pages - 1)) {
+	        	return false
+	        } else {
+	        	return true;
+	       	}
+	    }
 	}
 })();

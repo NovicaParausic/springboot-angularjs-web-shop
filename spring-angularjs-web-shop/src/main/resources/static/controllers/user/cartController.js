@@ -1,4 +1,4 @@
-(function(){
+(function() {
 	'use strict';
 	
 	angular
@@ -6,50 +6,49 @@
 		.controller('CartController', [
 		    '$scope',
 			'$http',
+			'$log',
 			cartController 
         ]);
 	
-	function cartController($scope, $http){
+	function cartController($scope, $http, $log) {
 		var vm = this;
 		
 		vm.buyError = false;
 		vm.buySuccess = false;
 		vm.signupErrorMessage = null
 		
-		vm.deleteItem = deleteItem;
 		vm.buyItems = buyItems;
+		vm.deleteItem = deleteItem;
 		
 		$scope.items = '';
 		$scope.value = 0;
 		
-		function buyItems(){
+		function buyItems() {
 			$http({
 				method: 'POST',
 				url: '/api/cart/buy'
 			})
 			.then(function(response) {
-				//console.log(response.status);
 				vm.buySuccess = true;
 			})
 			.catch(function(response) {
-				//console.log(response.status);
+				$log.info(response.status);
 				vm.buyError = true;
 			});
 		}
 		
-		function getCartItems(){
+		function getCartItems() {
 			$http({
 				method: 'GET',
 				url: '/api/cart'
 			})
-			.then(function(response){
-				//console.log(response.status);
+			.then(function(response) {
 				$scope.items = response.data;
 				countItemsValue($scope.items);
 			})
-			.catch(function(response){
-				//console.log(response.status);
-			})
+			.catch(function(response) {
+				$log.info(response.status);
+			});
 		}
 		
 		function countItemsValue(items){
@@ -60,18 +59,17 @@
 		
 		getCartItems();
 
-		function deleteItem(code){
+		function deleteItem(code) {
 			$http({
 				method: 'DELETE',
 				url: '/api/cart/' + code
 			})
-			.then(function(response){
-				//console.log(response);
+			.then(function(response) {
 				getCartItems();
 			})
-			.catch(function(response){
-				//console.log(response);
-			})
+			.catch(function(response) {
+				$log.info(response);
+			});
 		}
 	}
 })();

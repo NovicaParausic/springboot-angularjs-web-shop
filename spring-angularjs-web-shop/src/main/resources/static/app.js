@@ -9,13 +9,10 @@
     jamesAuth.factory('requestInterceptor', [
         '$cookies', '$q', '$log',
         function ($cookies, $q, $log) {
-        	console.log('request1');
         	return {
                 request: function(config) {
                     var user = $cookies.get('user'),
                         token = null;
-                    
-                    //console.log('request');
                     
                     if(user) {
                         user = JSON.parse(user);
@@ -23,7 +20,6 @@
                     }
 
                     if(token) {
-                    	console.log(token);
                         config.headers = config.headers || {};
                         config.headers.Authorization = token;
                     }
@@ -32,7 +28,6 @@
                 },
                 
                 response: function(response){
-                	console.log(response.status);
                 	return response || $q.when(response);
                 },
                 
@@ -150,6 +145,8 @@
             }
         });
    
+        $urlRouterProvider.otherwise('/');
+        
         $httpProvider.interceptors.push('requestInterceptor');
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     }
@@ -164,14 +161,10 @@
     ]);
 
     function authRun($http, $rootScope, $state, $log, authService) {
-    	$log.info('run forest');
-    	
-    	$log.info(authService.getUserData());
-    	//$http.defaults.headers.common.Authorization = authService.
-    	
         $rootScope.$on('$stateChangeStart', function(event, toState) {
-            if(toState.data && toState.data.accessLevel) {
-                var user = authService.getUserData();
+        	var user = authService.getUserData();
+            if(toState.data && toState.data.accessLevel && user) {
+                //var user = authService.getUserData();
                 if(!(toState.data.accessLevel & user.role)) {
                     event.preventDefault();
                     $state.go('index');

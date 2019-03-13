@@ -1,4 +1,4 @@
-(function(){
+(function() {
 	'use strict';
 
     angular
@@ -6,11 +6,12 @@
         .controller('LoginController', [
             '$http',
             '$state',
+            '$log',
             'authService',
             loginController
         ]);
 
-    function loginController($http, $state, authService) {
+    function loginController($http, $state, $log, authService) {
         var vm = this;
 
         vm.loginError = false;
@@ -34,12 +35,11 @@
         }   
 
         function handleSuccessfulLogin() {
-        	//console.log('Success');
             $state.go('index');
         }
 
         function handleFailedLogin(response) {
-        	//console.log(response);
+        	$log.info(response.status);
 
             if(response && response.data) {
                 vm.loginErrorMessage = response.data.message;

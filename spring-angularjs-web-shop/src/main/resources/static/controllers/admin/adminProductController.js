@@ -1,4 +1,4 @@
-(function(){
+(function() {
 	'use strict';
 	
 	angular
@@ -7,11 +7,12 @@
 		    '$scope',
 			'$http',
 		    '$stateParams',
+		    '$log',
 		    'authService',
 		    adminProductController
         ]);
 	
-	function adminProductController($scope, $http, $stateParams, authService){
+	function adminProductController($scope, $http, $stateParams, $log, authService) {
 		var vm = this;
 		
 		vm.message = '';
@@ -25,17 +26,17 @@
 			var user = authService.getUserData();
 			$scope.token = authService.createAuthorizationToken();
 						
-			if($scope.product.id){
+			if($scope.product.id) {
 				$http({
 					method: 'PUT', 
 					url: '/bla/products/' + $scope.product.id,
 					data: $scope.product
 				})
 				.then(function (response) {
-					//console.log(response.status);
+					$log.info(response.status);
 				})
 				.catch(function (response) {
-					//console.log(response.status);
+					$log.info(response.status);
 				});
 			} 
 			else {
@@ -45,10 +46,10 @@
 					data: $scope.product
 				})
 				.then(function (response) {
-					//console.log(response.status);
+					$log.info(response.status);
 				})
 				.catch(function (response) {
-					//console.log(response.status);
+					$log.info(response.status);
 				});
 			}
 		}

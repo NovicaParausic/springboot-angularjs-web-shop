@@ -4,6 +4,7 @@ package com.bla.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
@@ -28,10 +29,11 @@ public class ProductController {
 	private ProductService productService;
 	
 	@GetMapping
-	public ResponseEntity<List<Product>> getEnabledProducts(@RequestParam(value="page", defaultValue = "0") int page){
-		List<Product> ret = productService.findByEnabled(page);
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<Page<Product>> getEnabledProducts(@RequestParam(value="page", defaultValue = "0") int page){
+		Page<Product> ret = productService.findByEnabled(page);
 		
-		if(CollectionUtils.isEmpty(ret)){
+		if(ret == null){
 			return ResponseEntity.notFound().build();
 		} else {
 			return ResponseEntity.ok(ret);
