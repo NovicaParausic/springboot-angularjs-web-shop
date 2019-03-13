@@ -1,6 +1,6 @@
 package com.bla.security.service.impl;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,8 @@ import com.bla.security.service.UserService;
 @Service
 public class UserServiceImpl implements UserService{
 
+	private static Long USER_ROLE_ID = 1L;
+	
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -64,11 +66,7 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	private List<Authority> setAuthority(){
-		//Authority auth = authorityRepository.findById(1L).orElse(null);
-		
-		Authority auth = new Authority(1L);
-		List<Authority> auths = new ArrayList<>();
-		auths.add(auth);
-		return auths;
+		Authority auth = new Authority(USER_ROLE_ID);
+		return Collections.singletonList(auth);
 	}
 }

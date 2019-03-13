@@ -38,21 +38,21 @@
 	    
 	    getOrders();
         
-        function changePage(i){
+        function changePage(i) { 
     		vm.page += i;
     		getOrders();
     	}
         
-        function ifPrevPageAvailable(){
-        	if(vm.page > 0){
+        function ifPrevPageAvailable() {
+        	if(vm.page > 0) {
         		return false
         	} else {
         		return true;
         	}
         }
         
-        function ifNextPageAvailable(){
-        	if(vm.page < (vm.pages - 1)){
+        function ifNextPageAvailable() {
+        	if(vm.page < (vm.pages - 1)) {
         		return false
         	} else {
         		return true;
