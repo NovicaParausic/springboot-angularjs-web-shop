@@ -3,7 +3,8 @@
 
     var jamesAuth = angular.module('jamesAuth', [
         'ui.router',
-        'ngCookies'       
+        'ngCookies',
+        'ngStorage'
     ]);
 
     jamesAuth.factory('requestInterceptor', [

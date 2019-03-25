@@ -18,17 +18,13 @@
 			<textarea type="text" rows="4" cols="50" class="form-control" ng-model="product.information"></textarea>
 		</div>
 		<div>
-			<label>Enabled:{{product.enabled}}</label>
+			<label>Enabled:</label>
 			<select ng-model="product.enabled"
 				ng-options="o.v as o.n for o in [{n: 'False', v:false}, {n:'True', v:true}]">				
 			</select>			
-			<!-- <input type="text" class="form-control" ng-model="product.enabled"> -->
 		</div>
 		<div>
 			<button type="submit" class="btn btn-primary">Save</button>
-		</div>
-		<div>
-			token: {{token}}
 		</div>
 	</form>
 </div>

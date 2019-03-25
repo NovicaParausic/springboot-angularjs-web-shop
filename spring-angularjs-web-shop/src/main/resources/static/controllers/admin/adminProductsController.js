@@ -8,10 +8,11 @@
 			'$scope',
 			'$state',
 			'$log',
+			'dataService',
 			adminProductsController
 		]);
 	
-	function adminProductsController($http, $scope, $state, $log){
+	function adminProductsController($http, $scope, $state, $log, dataService){
 		var vm = this;
 		
 		vm.change = change;
@@ -54,7 +55,8 @@
 		getProducts();
 		
 		function change(product) {
-			$state.go('admin-product', {obj: product});
+			dataService.saveProduct(product);
+			$state.go('admin-product');
 		}		
 	}
 })();

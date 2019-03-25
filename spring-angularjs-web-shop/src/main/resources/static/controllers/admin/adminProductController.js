@@ -9,17 +9,18 @@
 		    '$stateParams',
 		    '$log',
 		    'authService',
+		    'dataService',
 		    adminProductController
         ]);
 	
-	function adminProductController($scope, $http, $stateParams, $log, authService) {
+	function adminProductController($scope, $http, $stateParams, $log, authService, dataService) {
 		var vm = this;
 		
 		vm.message = '';
 		
 		vm.saveProduct = saveProduct;
 		
-		$scope.product = $stateParams.obj;
+		$scope.product = dataService.loadProduct();
 		$scope.token = '';
 		
 		function saveProduct(product) {
