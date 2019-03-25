@@ -111,9 +111,6 @@
             url: '/admin-product',
             templateUrl: 'views/admin/partial-admin-product.html',
             controller: 'AdminProductController as arc',
-            params: {
-                obj: null
-            },
             data: {
                 accessLevel: staticData.accessLevels.admin
             }
